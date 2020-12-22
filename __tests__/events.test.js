@@ -4,8 +4,6 @@
 const vendor = require('../vendor.js');
 const driver = require('../driver.js');
 const events = require('../events.js');
-const { it } = require('@jest/globals');
-
 
 describe('Console Logs', () => {
   let consoleSpy;
