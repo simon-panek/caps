@@ -6,7 +6,7 @@
 
 ### Links and Resources
 
-- [GitHub Actions](http://xyz.com) (GitHub Actions)
+- [GitHub Actions](https://github.com/simon-panek/caps/actions)
 
 ### Setup
 
