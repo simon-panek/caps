@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/simon-panek/caps#readme",
   "dependencies": {
+    "dotenv": "^8.2.0",
     "faker": "^5.1.0"
   }
 }

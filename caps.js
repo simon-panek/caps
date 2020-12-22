@@ -1,5 +1,7 @@
 'use strict';
 
+const util = require('util');
+
 const events = require ('./events.js'); //connect to event pool
 
 require('./driver.js'); //connect to driver
@@ -11,25 +13,29 @@ require('./vendor.js'); //connect to vendor
 // });
 
 events.on('pickup', (payload) => {
+  // console.log('caps: payload', payload);
   console.log(`EVENT {
     event: pickup, 
-    time: ${Date.now()},
-    payload: ${payload}
+    time: ${Date()},
+    payload: ${util.inspect(payload, { showHidden: false, depth: null})}
   }`);
+  events.emit('pickup-ready', payload);
 });
 
 events.on('in-transit', (payload) => {
   console.log(`EVENT {
-    event: readyForPickup, 
-    time: ${Date.now()},
-    payload: ${payload}
+    event: in-transit, 
+    time: ${Date()},
+    payload: ${util.inspect(payload, { showHidden: false, depth: null})}
   }`);
+  events.emit('in-transit-ready', payload);
 });
 
 events.on('delivered', (payload) => {
   console.log(`EVENT {
-    event: readyForPickup, 
-    time: ${Date.now()},
-    payload: ${payload}
+    event: delivered, 
+    time: ${Date()},
+    payload: ${util.inspect(payload, { showHidden: false, depth: null})}
   }`);
+  events.emit('delivered-ready', payload);
 });

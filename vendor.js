@@ -1,4 +1,6 @@
 'use strict';
+require('dotenv').config();
+const util = require ('util');
 
 const faker = require('faker');
 
@@ -6,11 +8,13 @@ const events = require('./events.js');
 
 const storeName = process.env.STORE;
 
-let randomName = faker.name.findName();
-let randomAddress = faker.address.city();
-let randomOrderNumber = faker.random.uuid();
+// let randomName = faker.name.findName();
+// let randomCity = faker.address.city();
+// let randomState = faker.address.state();
+// let randomAddress = `${randomCity}, ${randomState}`;
+// let randomOrderNumber = faker.random.uuid();
 
-console.log('TEST: Name: ', randomName, ' City: ', randomAddress, ' OrderNumber: ', randomOrderNumber);
+//console.log('TEST: Name: ', randomName, ' City: ', randomAddress, ' OrderNumber: ', randomOrderNumber);
 
 //example
 // events.on('light', eyelid);
@@ -26,15 +30,17 @@ console.log('TEST: Name: ', randomName, ' City: ', randomAddress, ' OrderNumber:
 // module.exports = eyelid;
 
 setInterval(() => {
-  let order =
- { store: storeName,
-   orderID: randomOrderNumber,
-   customer: randomName,
-   address: randomAddress };
-  events.emit('pickup', order);
+  let payload =
+ { store: `${storeName}`,
+   orderID: `${faker.random.uuid()}`,
+   customer: `${faker.name.findName()}`,
+   address: `${faker.address.city()}, ${faker.address.state()}` };
+  // console.log('order: ', order);
+  events.emit('pickup', payload);
+
 }, 5000);
 
-events.on('delivered', thankYou);
+events.on('delivered-ready', thankYou);
 
 function thankYou(payload){
   console.log(`VENDOR: Thank you for delivering ${payload.orderID}`);
