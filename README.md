@@ -7,29 +7,22 @@
 ### Links and Resources
 
 - [GitHub Actions](http://xyz.com) (GitHub Actions)
-- [front-end application](http://xyz.com) (when applicable)
 
 ### Setup
 
 #### `.env` requirements (where applicable)
 
-i.e.
-
-- `PORT` - Port Number
-- `MONGODB_URI` - URL to the running mongo instance/db
+- STORE=FlowerPower
 
 #### How to initialize/run your application (where applicable)
 
-- e.g. `npm start`
-
-#### How to use your library (where applicable)
+- `npm caps.js`
 
 #### Tests
 
-- How do you run tests?
-- Any tests of note?
-- Describe any tests that you did not complete, skipped, etc
+- `npm test`
+- Tests check for the console logs related to `pickup-ready` (which should produce two different logs) and `delivered-ready`.
 
 #### UML
 
-Link to an image of the UML for your application and response to events
+![Whiteboard UML](401-lab-11-uml.png)

@@ -28,7 +28,7 @@ function pickup(payload) {
 
 function delivered(payload) {
   setTimeout ( () => {
-    // console.log(`Driver: delivered up ${payload.orderID}`);
+    console.log(`Driver: delivered up ${payload.orderID}`);
     // console2(payload);
     events.emit('delivered', payload);
   }, 3000);
@@ -40,9 +40,9 @@ function console1(payload){
   console.log(`DRIVER: picked up ${payload.orderID}}`);
 }
 
-events.on('pickup-ready', console2);
+// events.on('pickup-ready', console2);
 
-function console2(payload){
-  console.log(`Driver: delivered up ${payload.orderID}`);
-}
+// function console2(payload){
+//   console.log(`Driver: delivered up ${payload.orderID}`);
+// }
 
