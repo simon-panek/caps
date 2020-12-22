@@ -2,6 +2,8 @@
 
 ## Project: CAPS
 
+In this project a parcel management service orchestrates communication between vendors and drivers using socket.io.
+
 ### Author: Simon Panek
 
 ### Links and Resources
@@ -26,3 +28,4 @@
 #### UML
 
 ![Whiteboard UML](401-lab-11-uml.png)
+![Whiteboard UML Updated for Lab 12](401-lab-12-uml.png)

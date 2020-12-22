@@ -1,6 +1,5 @@
 'use strict'; 
 
-const { MODULESPECIFIER_TYPES } = require('@babel/types');
 const events = require ('./events.js');
 
 events.on('pickup-ready', readyForPickup);
