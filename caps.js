@@ -28,14 +28,15 @@ events.on('in-transit', (payload) => {
     time: ${Date()},
     payload: ${util.inspect(payload, { showHidden: false, depth: null})}
   }`);
-  events.emit('in-transit-ready', payload);
+  // events.emit('in-transit-ready', payload);
 });
 
 events.on('delivered', (payload) => {
+  events.emit('delivered-ready', payload);
   console.log(`EVENT {
     event: delivered, 
     time: ${Date()},
     payload: ${util.inspect(payload, { showHidden: false, depth: null})}
   }`);
-  events.emit('delivered-ready', payload);
+  console.log('////////////////Transaction Break/////////////////');
 });
