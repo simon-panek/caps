@@ -1,0 +1,23 @@
+{
+  "name": "caps",
+  "version": "1.0.0",
+  "description": "## Project: CAPS",
+  "main": "caps.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/simon-panek/caps.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/simon-panek/caps/issues"
+  },
+  "homepage": "https://github.com/simon-panek/caps#readme",
+  "dependencies": {
+    "faker": "^5.1.0"
+  }
+}
