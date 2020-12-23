@@ -20,9 +20,9 @@ describe('Vendor console Log', () => {
     consoleSpy.mockRestore();
   });
 
-  // it('1. Console logs an Event', () => {
-  //   vendor(payload);
-  //   expect(consoleSpy).toHaveBeenCalled();
-  // });
+  it('1. Console logs an Event', () => {
+    vendor(payload);
+    expect(consoleSpy).toHaveBeenCalled();
+  });
 
 });
