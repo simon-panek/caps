@@ -11,7 +11,6 @@ console.log('Driver, reporting for duty!');
 caps.on('pickup-ready', readyForPickup);
 
 function readyForPickup (payload) {
-  // console.log('inside driver', payload);
   pickup(payload);
   delivered(payload);
 }
@@ -30,6 +29,6 @@ function delivered(payload) {
   }, 3000);
 }
 
-
+module.exports = { readyForPickup, pickup, delivered };
 
 
