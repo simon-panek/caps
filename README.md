@@ -25,7 +25,7 @@ In this project a parcel management service orchestrates communication between v
 #### Tests
 
 - `npm test`
-- Tests check for the console logs related to `pickup-ready` (which should produce two different logs) and `delivered-ready`.
+- Tests check for the console logs produced by CAPS, Vendor, and Driver.
 
 #### UML
 
