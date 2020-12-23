@@ -6,6 +6,8 @@ In this project a parcel management service orchestrates communication between v
 
 ### Author: Simon Panek
 
+#### Collaborators: Nathan Cox, Ricardo Barcenas, Mariko Alvarado
+
 ### Links and Resources
 
 - [GitHub Actions](https://github.com/simon-panek/caps/actions)

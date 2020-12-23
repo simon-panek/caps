@@ -2,16 +2,16 @@
 
 const io = require('socket.io-client');
 const host = 'http://localhost:3000';
-//const capsConnection = io.connect(host);
 const caps = io.connect(`${host}/caps`);
 
-// const events = require ('../events.js');
+
 
 console.log('Driver, reporting for duty!');
 
 caps.on('pickup-ready', readyForPickup);
 
 function readyForPickup (payload) {
+  // console.log('inside driver', payload);
   pickup(payload);
   delivered(payload);
 }
@@ -30,10 +30,6 @@ function delivered(payload) {
   }, 3000);
 }
 
-// caps.on('pickup-ready', driverPickup);
 
-// function driverPickup(payload){
-//   console.log(`DRIVER: picked up ${payload.orderID}}`);
-// }
 
 
