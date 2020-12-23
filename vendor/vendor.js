@@ -29,3 +29,5 @@ function thankYou(payload){
     console.log(`VENDOR: Thank you for delivering ${payload.orderID}`);
   }
 }
+
+module.exports = thankYou;
