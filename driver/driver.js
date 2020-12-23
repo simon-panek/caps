@@ -18,7 +18,7 @@ function readyForPickup (payload) {
 
 function pickup(payload) {
   setTimeout ( () => {
-    // console.log(`DRIVER: picked up ${payload.orderID}}`);
+    console.log(`DRIVER: picked up ${payload.orderID}`);
     caps.emit('in-transit', payload);
   }, 1500);
 }
@@ -30,10 +30,10 @@ function delivered(payload) {
   }, 3000);
 }
 
-caps.on('pickup-ready', driverPickup);
+// caps.on('pickup-ready', driverPickup);
 
-function driverPickup(payload){
-  console.log(`DRIVER: picked up ${payload.orderID}}`);
-}
+// function driverPickup(payload){
+//   console.log(`DRIVER: picked up ${payload.orderID}}`);
+// }
 
 
