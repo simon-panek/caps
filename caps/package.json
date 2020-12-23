@@ -1,0 +1,19 @@
+{
+  "name": "caps",
+  "version": "1.0.0",
+  "description": "the one in charge",
+  "main": "caps.js", 
+  "scripts": {
+    "test": "jest --coverage"
+  },
+  "keywords": [],
+  "author": "Simon Panek",
+  "licence": "ISC",
+  "dependencies": {
+    "socket.io": "^2.3.0",
+    "socket.io-client": "^2.3.1",
+    "dotenv": "^8.2.0",
+    "faker": "^5.1.0",
+    "jest": "^26.6.3"
+  }
+}
