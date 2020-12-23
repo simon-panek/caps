@@ -32,4 +32,3 @@ In this project a parcel management service orchestrates communication between v
 ![Whiteboard UML](401-lab-11-uml.png)
 ![Whiteboard UML Updated for Lab 12](401-lab-12-uml.png)
 ![Whiteboard UML Updated for Lab 13](401-lab-13-uml.png)
-
