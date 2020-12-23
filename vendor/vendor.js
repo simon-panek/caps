@@ -4,11 +4,13 @@ const util = require ('util');
 const faker = require('faker');
 const io = require('socket.io-client');
 const host = 'http://localhost:3000';
-const capsConnection = io.connect(host);
-const caps = io.of(`${host}/caps`);
+//const capsConnection = io.connect(host);
+const caps = io.connect(`${host}/caps`);
 // const events = require('../events.js');
 
 const storeName = process.env.STORE;
+
+console.log('Vendor, reporting for duty!');
 
 setInterval(() => {
   let payload =
@@ -16,7 +18,7 @@ setInterval(() => {
    orderID: `${faker.random.uuid()}`,
    customer: `${faker.name.findName()}`,
    address: `${faker.address.city()}, ${faker.address.state()}` };
-  // console.log('order: ', order);
+console.log('order: ', payload);
   caps.emit('pickup', payload);
 
 }, 5000);

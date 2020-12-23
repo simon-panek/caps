@@ -2,10 +2,12 @@
 
 const io = require('socket.io-client');
 const host = 'http://localhost:3000';
-const capsConnection = io.connect(host);
-const caps = io.of(`${host}/caps`);
+//const capsConnection = io.connect(host);
+const caps = io.connect(`${host}/caps`);
 
 // const events = require ('../events.js');
+
+console.log('Driver, reporting for duty!');
 
 caps.on('pickup-ready', readyForPickup);
 
