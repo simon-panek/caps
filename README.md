@@ -1,4 +1,4 @@
-# LAB - Class 11
+# LAB - Class 11-13
 
 ## Project: CAPS
 
@@ -6,7 +6,7 @@ In this project a parcel management service orchestrates communication between v
 
 ### Author: Simon Panek
 
-#### Collaborators: Nathan Cox, Ricardo Barcenas, Mariko Alvarado
+#### Collaborators: Nathan Cox, Ricardo Barcenas, Mariko Alvarado, Dina Ayoub, Stacy Burris, Tina Meyers, Sara Strasner
 
 ### Links and Resources
 
@@ -31,3 +31,5 @@ In this project a parcel management service orchestrates communication between v
 
 ![Whiteboard UML](401-lab-11-uml.png)
 ![Whiteboard UML Updated for Lab 12](401-lab-12-uml.png)
+![Whiteboard UML Updated for Lab 13](401-lab-13-uml.png)
+
