@@ -1,8 +1,8 @@
 'use strict';
 
 const faker = require('faker');
-const vendor = require('../vendor/vendor.js');
-const driver = require('../driver/driver.js');
+// const vendor = require('../vendor/vendor.js');
+// const driver = require('../driver/driver.js');
 const eventLogger = require('../caps/eventLogger');
 
 describe('CAPS console Logs', () => {
