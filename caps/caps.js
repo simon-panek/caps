@@ -6,7 +6,7 @@ const util = require('util');
 const io = require('socket.io')(port);
 const eventLogger = require('./eventLogger.js');
 
-const caps = io.of('/caps');
+const caps = io.of('/caps'); //named space
 
 console.log('CAPS, reporting for duty!');
 
@@ -14,19 +14,31 @@ io.on('connection', (socket) => {
 // console.log('Connected to CAPS with socket ID: ', socket.id);
 });
 
-caps.on('connection', (socket2) => {
+
+
+caps.on('connection', (socket2) => { //connection to named space caps
   // console.log('Connected to CAPSNameSpace with socket ID: ', socket2.id);
+
+  //vendors to join a private room within the named space
+  socket2.on('join', room => {
+    //log that they joined the room
+    console.log(`{$socket.id} Joining ${room}`);
+    socket2.join(room);
+  });
 
   socket2.on('pickup', (payload) => {
     eventLogger('pickup', payload);
     caps.emit('pickup-ready', payload);
   }); //listener hears pickup calls eventLogger
 
-  socket2.on('in-transit', (payload) => eventLogger('in-transit', payload));
+  socket2.on('in-transit', (payload) => {
+    eventLogger('in-transit', payload);
+    caps.to(payload.store).emit('in-transit', payload); //payload.store === room name of each store, so only emitting to that specific room
+  });
 
   socket2.on('delivered', (payload) => {
     eventLogger('delivered', payload);
-    caps.emit('delivered-ready', payload);
+    caps.to(payload.store).emit('delivered-ready', payload);
   });
 
 });
