@@ -10,7 +10,7 @@ const storeName = '1-206-Flowers';
 
 console.log('Vendor, reporting for duty!');
 
-let vendorPayload = { store: storeName, event: 'delivered'};
+let vendorPayload = { clientID: storeName, event: 'delivered'};
 
 socket.emit('get-all', vendorPayload); //retrieve all messages in queue
 

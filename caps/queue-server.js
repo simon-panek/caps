@@ -33,7 +33,7 @@ caps.on('connection', socket => {
 
   });
 
-  socket.on('getAll', payload => {
+  socket.on('get-all', payload => {
 
     console.log('in the HUB - listening to GETALL');
 
