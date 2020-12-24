@@ -35,11 +35,13 @@ caps.on('connection', socket => {
 
   socket.on('get-all', payload => {
 
-    console.log('in the HUB - listening to GETALL');
+    console.log('in the HUB - listening to GETALL from: ', payload);
 
     Object.keys(queue.message).forEach(id=> {
-      socket.to(payload.store).emit('message', {id, payload: queue.message[id]});
+      socket.to(payload.clientID).emit('message', {id, payload: queue.message[id]});
     });
+
+    console.log('should have emitted: ', payload);
 
   });
 
@@ -48,9 +50,16 @@ caps.on('connection', socket => {
     delete queue.message[message.id];
   });
 
+  socket.on('delivered', (originalPayload)=> {
+    let deliveredMessage = {
+      messageID: uuid(),
+      payload: originalPayload
+    };
+    // queue.message[messageID] = originalPayload; TODO: Add message to queue
+    socket.emit('delivered', deliveredMessage);
+  });
+
 });
-
-
 
 
 //////////////////original caps/////////////////////
@@ -61,7 +70,7 @@ caps.on('connection', (socket2) => { //connection to named space caps
   //vendors to join a private room within the named space
   socket2.on('join', room => {
     //log that they joined the room
-    console.log(`{$socket.id} Joining ${room}`);
+    console.log(`${socket2.id} Joining ${room}`);
     socket2.join(room);
   });
 

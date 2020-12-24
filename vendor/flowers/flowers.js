@@ -8,7 +8,7 @@ const socket = io.connect(`${host}/caps`); //connecting to the caps name space
 
 const storeName = '1-206-Flowers';
 
-console.log('Vendor, reporting for duty!');
+console.log('Flower vendor, reporting for duty!');
 
 let vendorPayload = { clientID: storeName, event: 'delivered'};
 
