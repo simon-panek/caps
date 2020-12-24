@@ -33,7 +33,7 @@ setInterval(() => {
 
 }, 5000);
 
-socket.on('delivered-ready', thankYou);
+socket.on('delivered', thankYou);
 
 function thankYou(payload){
   if(payload.store === storeName) {

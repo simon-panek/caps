@@ -6,10 +6,10 @@ const socket = io.connect(`${host}/caps`);
 
 console.log('Driver, reporting for duty!');
 
-let driverPayload = {clientID: 'driver', event: 'pickup-ready'};
+let driverPayload = {clientID: 'driver', event: 'pickup'};
 socket.emit('get-all', driverPayload);
 
-socket.on('pickup-ready', readyForPickup);
+socket.on('pickup', readyForPickup);
 
 function readyForPickup (payload) {
   pickup(payload);

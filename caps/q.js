@@ -77,7 +77,7 @@ caps.on('connection', (socket2) => { //connection to named space caps
 
   socket2.on('pickup', (payload) => {
     eventLogger('pickup', payload);
-    caps.emit('pickup-ready', payload);
+    caps.emit('pickup', payload);
   }); //listener hears pickup calls eventLogger
 
   socket2.on('in-transit', (payload) => {
@@ -87,7 +87,7 @@ caps.on('connection', (socket2) => { //connection to named space caps
 
   socket2.on('delivered', (payload) => {
     eventLogger('delivered', payload);
-    caps.to(payload.store).emit('delivered-ready', payload);
+    caps.to(payload.store).emit('delivered', payload);
   });
 
 });
