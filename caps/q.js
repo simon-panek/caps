@@ -20,77 +20,108 @@ const queue = { //this queue needs to have messages keyed by retailer, event nam
 };
 
 caps.on('connection', socket => {
-  socket.on('pickup', payload => {
-    console.log('CL#2 In the queue - heard PICKUP', payload);
 
-    const id = uuid();
+  //vendors to join a private room within the named space
+  socket.on('join', room => {
+    //log that they joined the room
+    console.log(`${socket.id} Joining ${room}`);
+    socket.join(room);
+  });
 
-    queue.message[id] = payload;
+  /////////////////////--PICKUP--///////////////////////////
+
+  socket.on('pickup', payload => { //listening for pickup
+    console.log('CL#2 In HUB - heard PICKUP', payload);
+
+    const id = uuid(); //create a new unique message id
+
+    queue.message[id] = {event: 'pickup', payload}; //add the creation event payload to the que with the unique message id
     console.log('CL#3 queue', queue);
 
-    //caps.emit('message-added');
-
-    caps.to(payload.store).emit('confirmation',{id, payload: queue.message[id]});
+    eventLogger('pickup', payload); //log the pickup
+    caps.emit('pickup', {id, payload}); //send out pickup so the driver can hear it
 
   });
+
+  ////////////////////--IN-TRANSIT--////////////////////////////
+
+  socket.on('in-transit', payload => { //listening for in-transit from driver
+    console.log('CL#4 In HUB - heard IN-TRANSIT', payload);
+
+    const id = uuid(); //create a new unique message id
+    queue.message[id] = {event: 'in-transit', payload}; //add the payload to the queue with the unique message id
+    console.log('CL#5 queue', queue);
+
+    eventLogger('in-transit', payload); //log the in-transit event
+    caps.to(payload.store).emit('in-transit',{id, payload: queue.message[id]}); //pass on in-transit to the correct vendor
+
+  });
+
+  ///////////////////////////--DELIVERED--///////////////////////////
+
+  socket.on('delivered', payload => { //listening for delivered
+    console.log('CL#6 In HUB - heard DELIVERED', payload);
+
+    const id = uuid(); //create a new unique message id
+    queue.message[id] = {event: 'delivered', payload}; //add the payload to the queue with the unique message id
+    console.log('CL#7 queue', queue);
+
+    eventLogger('delivered', payload); //log the delivered
+    caps.to(payload.store).emit('delivered',{id, payload: queue.message[id]}); //pass on the delivery notification to the correct vendor
+
+  });
+
+  ///////////////////////////--GET-ALL--//////////////////////////////
 
   socket.on('get-all', payload => {
 
-    console.log('CL#4 in the HUB - listening to GETALL from: ', payload);
+    console.log('CL#8 in the HUB - listening to GETALL from: ', payload);
 
     Object.keys(queue.message).forEach(id=> {
-      socket.to(payload.clientID).emit('message', {id, payload: queue.message[id]});
+      socket.to(payload.clientID).emit('messageQ', {id, payload: queue.message[id]});
     });
 
-   // console.log('should have emitted: ', payload);
-
   });
 
-  socket.on('received', message => {
-    console.log('CL#5 in hub - heard RECEIVED', message);
-    delete queue.message[message.id];
+  //////////////////////////--RECEIVED--/////////////////////////////
+
+  socket.on('received', id => {
+    console.log('CL#9 in hub - heard RECEIVED', id);
+    delete queue.message[id];
   });
 
-  socket.on('delivered', (originalPayload)=> {
-    let deliveredMessage = {
-      messageID: uuid(),
-      payload: originalPayload
-    };
-    // queue.message[messageID] = originalPayload; TODO: Add message to queue
-    socket.emit('delivered', deliveredMessage);
-  });
 
 });
 
 
 //////////////////original caps/////////////////////
 
-caps.on('connection', (socket2) => { //connection to named space caps
-  // console.log('Connected to CAPSNameSpace with socket ID: ', socket2.id);
+//caps.on('connection', (socket2) => { //connection to named space caps
+// console.log('Connected to CAPSNameSpace with socket ID: ', socket2.id);
 
-  //vendors to join a private room within the named space
-  socket2.on('join', room => {
-    //log that they joined the room
-    console.log(`${socket2.id} Joining ${room}`);
-    socket2.join(room);
-  });
+// //vendors to join a private room within the named space
+// socket2.on('join', room => {
+//   //log that they joined the room
+//   console.log(`${socket2.id} Joining ${room}`);
+//   socket2.join(room);
+// });
 
-  socket2.on('pickup', (payload) => {
-    eventLogger('pickup', payload);
-    caps.emit('pickup', payload);
-  }); //listener hears pickup calls eventLogger
+// socket2.on('pickup', (payload) => {
+//   eventLogger('pickup', payload);
+//   caps.emit('pickup', payload);
+// }); //listener hears pickup calls eventLogger
 
-  socket2.on('in-transit', (payload) => {
-    eventLogger('in-transit', payload);
-    caps.to(payload.store).emit('in-transit', payload); //payload.store === room name of each store, so only emitting to that specific room
-  });
+// socket2.on('in-transit', (payload) => {
+//   eventLogger('in-transit', payload);
+//   caps.to(payload.store).emit('in-transit', payload); //payload.store === room name of each store, so only emitting to that specific room
+// });
 
-  socket2.on('delivered', (payload) => {
-    eventLogger('delivered', payload);
-    caps.to(payload.store).emit('delivered', payload);
-  });
+// socket2.on('delivered', (payload) => {
+//   eventLogger('delivered', payload);
+//   caps.to(payload.store).emit('delivered', payload);
+// });
 
-});
+//});
 
 
 
