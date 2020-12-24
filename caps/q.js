@@ -12,7 +12,7 @@ const caps = io.of('/caps'); //named space
 console.log('CAPS / Queue, reporting for duty!');
 
 io.on('connection', (socket) => {
-  console.log('Connected to CAPS/Queue with socket ID: ', socket.id);
+  console.log('CL#1 Connected to CAPS/Queue with socket ID: ', socket.id);
 });
 
 const queue = { //this queue needs to have messages keyed by retailer, event name, messageid
@@ -21,32 +21,33 @@ const queue = { //this queue needs to have messages keyed by retailer, event nam
 
 caps.on('connection', socket => {
   socket.on('pickup', payload => {
-    console.log('In the queue - heard PICKUP', payload);
+    console.log('CL#2 In the queue - heard PICKUP', payload);
 
     const id = uuid();
 
     queue.message[id] = payload;
+    console.log('CL#3 queue', queue);
 
-    caps.emit('message-added');
+    //caps.emit('message-added');
 
-    caps.to(payload.store).emit('message',{id, payload: queue.message[id]});
+    caps.to(payload.store).emit('confirmation',{id, payload: queue.message[id]});
 
   });
 
   socket.on('get-all', payload => {
 
-    console.log('in the HUB - listening to GETALL from: ', payload);
+    console.log('CL#4 in the HUB - listening to GETALL from: ', payload);
 
     Object.keys(queue.message).forEach(id=> {
       socket.to(payload.clientID).emit('message', {id, payload: queue.message[id]});
     });
 
-    console.log('should have emitted: ', payload);
+   // console.log('should have emitted: ', payload);
 
   });
 
   socket.on('received', message => {
-    console.log('in hub - heard RECEIVED', message);
+    console.log('CL#5 in hub - heard RECEIVED', message);
     delete queue.message[message.id];
   });
 

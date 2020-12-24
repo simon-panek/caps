@@ -14,7 +14,7 @@ let vendorPayload = { clientID: storeName, event: 'delivered'};
 
 socket.emit('get-all', vendorPayload); //retrieve all messages in queue
 
-socket.on('message', message => {
+socket.on('confirmation', message => {
   console.log('in Flowers received MESSAGE', message.payload);
   socket.emit('received', message);
 });
