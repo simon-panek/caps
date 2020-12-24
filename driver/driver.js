@@ -2,13 +2,14 @@
 
 const io = require('socket.io-client');
 const host = 'http://localhost:3000';
-const caps = io.connect(`${host}/caps`);
-
-
+const socket = io.connect(`${host}/caps`);
 
 console.log('Driver, reporting for duty!');
 
-caps.on('pickup-ready', readyForPickup);
+let driverPayload = {clientID: 'driver', event: 'pickup-ready'};
+socket.emit('get-all', driverPayload);
+
+socket.on('pickup-ready', readyForPickup);
 
 function readyForPickup (payload) {
   pickup(payload);
@@ -18,14 +19,14 @@ function readyForPickup (payload) {
 function pickup(payload) {
   setTimeout ( () => {
     console.log(`DRIVER: picked up ${payload.orderID}`);
-    caps.emit('in-transit', payload);
+    socket.emit('in-transit', payload);
   }, 1500);
 }
 
 function delivered(payload) {
   setTimeout ( () => {
     console.log(`Driver: delivered up ${payload.orderID}`);
-    caps.emit('delivered', payload);
+    socket.emit('delivered', payload);
   }, 3000);
 }
 
