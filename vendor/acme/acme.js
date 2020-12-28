@@ -20,7 +20,7 @@ let vendorPayload = { clientID: storeName, event: 'delivered'}; //set payload fo
 socket.emit('get-all', vendorPayload); //retrieve all messages in queue
 
 socket.on('messageQ', message => { //receiving queued messages from Q
-  console.log('A-CSL#1 in queued messages heard - MESSAGEQ: ', message);
+  // console.log('A-CSL#1 in queued messages heard - MESSAGEQ: ', message);
   if(message.payload.event === 'delivered') { //if the event in the queued message is 'delivered' call the thankyou function with the payload
     thankYou(message.payload.payload, 0);
   }
@@ -28,7 +28,7 @@ socket.on('messageQ', message => { //receiving queued messages from Q
 });
 
 socket.on('in-transit', message => { //listen for in-transit
-  console.log('A-CSL#2 in ACME received MESSAGE', message); 
+  // console.log('A-CSL#2 in ACME received MESSAGE', message); 
   socket.emit('received', message.id); //respond with confirmation message
 });
 
@@ -47,7 +47,7 @@ setInterval(() => { //create new payload every 5 seconds
 socket.on('delivered', thankYou); //listen for delivered and fire thankYou
 
 function thankYou(message, messageChecker=1){
-  console.log('A-CSL#3 ThankYou ', message);
+  // console.log('A-CSL#3 ThankYou ', message);
   console.log(`VENDOR: Thank you for delivering ${message.payload.payload.orderID}`); //log thankyou & order ID
 
   if(messageChecker === 1) { //check if function was called from live listener or from queued message

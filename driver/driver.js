@@ -13,7 +13,7 @@ let driverPayload = {clientID: 'driver', event: 'pickup'}; //set payload for req
 socket.emit('get-all', driverPayload); //request all queued messages
 
 socket.on('messageQ', message => { //receiving queued messages from Q
-  console.log('D-CSL#1 in queued messages heard - MESSAGEQ: ', message);
+  // console.log('D-CSL#1 in queued messages heard - MESSAGEQ: ', message);
   if(message.payload.event === 'pickup') { //if the event in the queued message is 'pickup' call the thankyou function with the payload
     readyForPickup(message.payload.payload, 0);
   }
@@ -23,7 +23,7 @@ socket.on('messageQ', message => { //receiving queued messages from Q
 socket.on('pickup', readyForPickup); //listen for pickup and fire readyForPickup
 
 function readyForPickup (message, messageChecker=1) { 
-  console.log('D-CSL#2 payload ', message);
+  // console.log('D-CSL#2 payload ', message);
   pickup(message.payload); //fire pickup
   delivered(message.payload); //fire delivered
   if(messageChecker === 1){ //check if message was received live or from queue
