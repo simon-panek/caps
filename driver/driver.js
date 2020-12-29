@@ -4,6 +4,27 @@ const io = require('socket.io-client');
 const host = 'http://localhost:3000';
 const socket = io.connect(`${host}/caps`);
 
+const Queue = require('./queueDriver.js');
+const queue = new Queue ('driver');
+
+queue.subscribe('pickup', payload => {
+  console.log('Pick up', payload);
+  pickup(payload);
+})
+
+function pickup (payload) {
+  setTimeout(()=> {
+    queue.trigger('in-transit', payload);
+    deliver(payload);
+  }, 1500);
+}
+
+function deliver (payload){
+  setTimeout(()=> {
+    queue.trigger('delivered', payload);
+  }, 1500);
+}
+
 let messageChecker; //declare a switch variable for the confirmation message
 
 console.log('Driver, reporting for duty!'); //client is working

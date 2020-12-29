@@ -15,9 +15,25 @@ io.on('connection', (socket) => {
   // console.log('CL#1 Connected to CAPS/Queue with socket ID: ', socket.id);
 });
 
-const queue = { //this queue needs to have messages keyed by retailer, event name, messageid
-  message: {}
-};
+const messages = {};
+
+// {
+//   pickup: {
+//     driver: {
+//       23: {
+//         store: companyID,
+//         code: 12341049,
+//         orderID: 23r00897324,
+//         customer: bob john,
+//         address: city, state
+//       }
+//     }
+//   }
+// }
+
+// const queue = { //this queue needs to have messages keyed by retailer, event name, messageid
+//   message: {}
+// };
 
 caps.on('connection', socket => {
 
@@ -30,16 +46,19 @@ caps.on('connection', socket => {
 
   /////////////////////--PICKUP--///////////////////////////
 
-  socket.on('pickup', payload => { //listening for pickup
+  socket.on('pickup', message => { //listening for pickup
     // console.log('CL#2 In HUB - heard PICKUP', payload);
 
-    const id = uuid(); //create a new unique message id
+    const messageID = uuid(); //create a new unique message id
 
-    queue.message[id] = {event: 'pickup', payload}; //add the creation event payload to the que with the unique message id
+    messages['pickup']['driver'][messageID] = message.payload; //put message in the queue
+
+    //queue.message[id] = {event: 'pickup', payload}; //add the creation event payload to the que with the unique message id
     // console.log('CL#3 queue', queue);
 
-    eventLogger('pickup', payload); //log the pickup
-    caps.emit('pickup', {id, payload}); //send out pickup so the driver can hear it
+    eventLogger('pickup', message); //log the pickup
+   // caps.emit('pickup', {id, message}); //send out pickup so the driver can hear it
+    caps.in('driver').emit('pickup', {messageID, payload: message.payload});
 
   });
 

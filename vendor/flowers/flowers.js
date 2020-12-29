@@ -5,6 +5,11 @@ const io = require('socket.io-client');
 const host = 'http://localhost:3000';
 const socket = io.connect(`${host}/caps`); //connecting to the caps name space
 
+const Queue = require('../queue.js');
+const companyID = 'flowers';
+const queue = new Queue (companyID);
+
+
 
 const storeName = '1-206-Flowers'; //store name
 
@@ -28,20 +33,20 @@ socket.on('messageQ', message => { //receiving queued messages from Q
 });
 
 socket.on('in-transit', message => { //listen for in-transit
-  // console.log('F-CSL#2 in Flowers received MESSAGE', message); 
+  // console.log('F-CSL#2 in Flowers received MESSAGE', message);
   socket.emit('received', message.id); //respond with confirmation message
 });
 
 
 setInterval(() => { //create new payload every 5 seconds
-  let payload =
- { store: storeName,
-   orderID: `${faker.random.uuid()}`,
-   customer: `${faker.name.findName()}`,
-   address: `${faker.address.city()}, ${faker.address.state()}` };
-// console.log('order: ', payload);
-  socket.emit('pickup', payload);
-
+  queue.trigger('pickup', {
+    store: storeName,
+    orderID: `${faker.random.uuid()}`,
+    customer: `${faker.name.findName()}`,
+    address: `${faker.address.city()}, ${faker.address.state()}`
+  });
+  // console.log('order: ', payload);
+  // socket.emit('pickup', payload);
 }, 5000);
 
 socket.on('delivered', thankYou); //listen for delivered and fire thankYou
