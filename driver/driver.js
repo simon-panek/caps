@@ -13,9 +13,9 @@ let driverPayload = {clientID: 'driver', event: 'pickup'}; //set payload for req
 socket.emit('get-all', driverPayload); //request all queued messages
 
 socket.on('messageQ', message => { //receiving queued messages from Q
-console.log('D-CSL#1 in queued messages heard - MESSAGEQ: ', message);
+// console.log('D-CSL#1 in queued messages heard - MESSAGEQ: ', message);
   if(message.payload.event === 'pickup') { //if the event in the queued message is 'pickup' call the thankyou function with the payload
-    readyForPickup(message.payload);
+    readyForPickup(message);
   }
 
 });
@@ -23,25 +23,28 @@ console.log('D-CSL#1 in queued messages heard - MESSAGEQ: ', message);
 socket.on('pickup', readyForPickup); //listen for pickup and fire readyForPickup
 
 function readyForPickup (message) {
-console.log('D-CSL#2 payload ', message);
-  pickup(message.payload); //fire pickup
-  delivered(message.payload); //fire delivered
+// console.log('D-CSL#2 payload ', message);
+  pickup(message); //fire pickup
+  delivered(message); //fire delivered
 
   socket.emit('received', message.id); //sends out confirmation of receipt payload should have message id
 
 }
 
-function pickup(payload) {
+function pickup(message) {
   setTimeout ( () => {
-    console.log(`DRIVER: picked up ${payload.orderID}`); //log driver pickup and order ID
-    socket.emit('in-transit', payload); //emit in-transit to Q
+  // console.log('D-CSL#3 message ', message);
+    console.log(`DRIVER: picked up ${message.payload.payload.orderID}`); //log driver pickup and order ID
+    socket.emit('in-transit', message.payload.payload); //emit in-transit to Q
   }, 1500);
 }
 
-function delivered(payload) {
+function delivered(message) {
   setTimeout ( () => {
-    console.log(`Driver: delivered up ${payload.orderID}`); //log driver delivered and order ID
-    socket.emit('delivered', payload); //emit delivered to Q
+
+// console.log('D-CSL#4 message ', message);
+    console.log(`Driver: delivered up ${message.payload.payload.orderID}`); //log driver delivered and order ID
+    socket.emit('delivered', message.payload.payload); //emit delivered to Q
   }, 3000);
 }
 

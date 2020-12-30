@@ -39,14 +39,14 @@ caps.on('connection', socket => {
     // console.log('CL#3 queue', queue);
 
     eventLogger('pickup', payload); //log the pickup
-    caps.emit('pickup', {id, payload}); //send out pickup so the driver can hear it
+    caps.emit('pickup', {id, payload: queue.message[id]}); //send out pickup so the driver can hear it
 
   });
 
   ////////////////////--IN-TRANSIT--////////////////////////////
 
   socket.on('in-transit', payload => { //listening for in-transit from driver
-    // console.log('CL#4 In HUB - heard IN-TRANSIT', payload);
+// console.log('CL#4 In HUB - heard IN-TRANSIT', payload);
 
     const id = uuid(); //create a new unique message id
     queue.message[id] = {event: 'in-transit', payload}; //add the payload to the queue with the unique message id
@@ -60,7 +60,7 @@ caps.on('connection', socket => {
   ///////////////////////////--DELIVERED--///////////////////////////
 
   socket.on('delivered', payload => { //listening for delivered
-    // console.log('CL#6 In HUB - heard DELIVERED', payload);
+// console.log('CL#6 In HUB - heard DELIVERED', payload);
 
     const id = uuid(); //create a new unique message id
     queue.message[id] = {event: 'delivered', payload}; //add the payload to the queue with the unique message id
@@ -75,11 +75,11 @@ caps.on('connection', socket => {
 
   socket.on('get-all', payload => {
 
-console.log('CL#8 in the HUB - listening to GETALL from: ', payload);
+// console.log('CL#8 in the HUB - listening to GETALL from: ', payload);
 
     Object.keys(queue.message).forEach(id=> {
       socket.emit('messageQ', {id, payload: queue.message[id]});
-console.log('CL#9 in the HUB GETALL - queue: ', queue.message[id]);
+// console.log('CL#9 in the HUB GETALL - queue: ', queue.message[id]);
     });
 
   });
