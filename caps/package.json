@@ -1,8 +1,8 @@
 {
-  "name": "caps",
+  "name": "q",
   "version": "1.0.0",
   "description": "the one in charge",
-  "main": "caps.js", 
+  "main": "q.js", 
   "scripts": {
     "test": "jest --coverage"
   },
