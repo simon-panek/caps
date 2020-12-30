@@ -75,10 +75,11 @@ caps.on('connection', socket => {
 
   socket.on('get-all', payload => {
 
-    // console.log('CL#8 in the HUB - listening to GETALL from: ', payload);
+console.log('CL#8 in the HUB - listening to GETALL from: ', payload);
 
     Object.keys(queue.message).forEach(id=> {
-      socket.to(payload.clientID).emit('messageQ', {id, payload: queue.message[id]});
+      socket.emit('messageQ', {id, payload: queue.message[id]});
+console.log('CL#9 in the HUB GETALL - queue: ', queue.message[id]);
     });
 
   });
